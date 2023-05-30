@@ -3,8 +3,9 @@ No one has completed this Project lately, be the first!
 Dockerize an Express and Postgres Application
 For this phase, you'll create a docker-compose.yml file for a simple Express and Postgres app. Download the skeleton and you can see the application. Notice how you have a full Express application as well as a db directory with model, migration, and seed files. You can Dockerize this container in at least two ways:
 
-Local development: mount a volume in the container. You would bind mount a host path to the application by setting a volumes key with a value of .:/app in the docker-compose.yml file. This maps a local directory to the container so all the source code (including node_modules) stays on the local file system. As a reminder, you can use the volumes option to both configure a "bind mount" and a "volume". The term "volume" has a very specific meaning in Docker so you should only use it when referring to a named volume.
-Non-local development: copy application files into custom image. You would use COPY . /app in the Dockerfile. Every time you change the source code for the application, you’d need to rebuild the containers.
+1. Local development: mount a volume in the container. You would bind mount a host path to the application by setting a volumes key with a value of .:/app in the docker-compose.yml file. This maps a local directory to the container so all the source code (including node_modules) stays on the local file system. As a reminder, you can use the volumes option to both configure a "bind mount" and a "volume". The term "volume" has a very specific meaning in Docker so you should only use it when referring to a named volume.
+
+3. Non-local development: copy application files into custom image. You would use COPY . /app in the Dockerfile. Every time you change the source code for the application, you’d need to rebuild the containers.
 
 Phase 1: Dockerize an Express/Postgres app for local development
 
@@ -67,9 +68,10 @@ Also note the example command listed in the Docker docs: command: ["./wait-for-i
 
 Use these two examples to build your command that:
 
-Runs the ./wait-for script
-Connects the postgres database to local host (5432)
-Runs the npm run build-start command
+1. Runs the ./wait-for script
+2. Connects the postgres database to local host (5432)
+3. Runs the npm run build-start command
+
 After you have set up your app service's command, be sure to set the execute permissions for the wait-for script by running chmod +x wait-for. Then, start your containers in with docker-compose up and view your running containers in another tab with docker-compose ps.
 
 Reminder: you'll need to use the docker-compose up --build command with the --build flag whenever you make changes to any Dockerfiles or the docker-compose.yml file.
