@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flaskapp
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USERNAME: reading_list_app
+      DB_PASSWORD: password
+      DB_DATABASE: reading_list
+      DB_HOST: postgres
+      NODE_ENV: development
+    networks:
+      - pgflaskapp
+    volumes:
+      - ".:/app"
+    depends_on:
+      - db
+    command: ./entrypoint.sh
+
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: reading_list_app
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: reading_list
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - pgflaskapp
+    aliases:
+      - postgres
+
+volumes:
+  postgres-db:
+
+networks:
+  pgflaskapp:
+    driver: bridge
